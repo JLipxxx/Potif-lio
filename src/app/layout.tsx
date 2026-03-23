@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "João Felipe Portfolio",
     images: [
       {
-        url: "/og-image.png", // A placeholder OG image
+        url: "/Potif-lio/og-image.png",
         width: 1200,
         height: 630,
         alt: "Secure Portfolio Dashboard Preview"
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "João Felipe | Secure Portfolio Dashboard",
     description: "Analista de Cibersegurança focado em operações Blue Team.",
-    images: ["/og-image.png"],
+    images: ["/Potif-lio/og-image.png"],
   },
 };
 
