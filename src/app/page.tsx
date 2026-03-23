@@ -16,8 +16,8 @@ import SkillsDashboard from "@/components/views/SkillsDashboard";
 import ExperienceTimeline from "@/components/views/ExperienceTimeline";
 import CertificationsGrid from "@/components/views/CertificationsGrid";
 
-// Configs
 import { viewTransition } from "@/lib/animations";
+import EasterEggs from "@/components/ui/EasterEggs";
 
 export default function Home() {
   const activeView = usePortfolioStore((state) => state.activeView);
@@ -44,6 +44,7 @@ export default function Home() {
   return (
     <main className="flex flex-col lg:flex-row w-full min-h-screen lg:h-screen bg-cover relative bg-brand-bg overflow-x-hidden">
       <BackgroundDecorators />
+      <EasterEggs />
 
       {/* Main Layout Container */}
       <motion.div

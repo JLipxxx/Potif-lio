@@ -20,11 +20,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "João Felipe | Secure Portfolio Dashboard",
     description: "Analista de Cibersegurança focado em operações Blue Team.",
-    url: "https://jfelipesfreitas.dev", 
+    url: "https://joaofelipe-freitas.github.io/Potif-lio", 
     siteName: "João Felipe Portfolio",
     images: [
       {
-        url: "/Potif-lio/og-image.png",
+        url: "https://joaofelipe-freitas.github.io/Potif-lio/og-image.png",
         width: 1200,
         height: 630,
         alt: "Secure Portfolio Dashboard Preview"
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "João Felipe | Secure Portfolio Dashboard",
     description: "Analista de Cibersegurança focado em operações Blue Team.",
-    images: ["/Potif-lio/og-image.png"],
+    images: ["https://joaofelipe-freitas.github.io/Potif-lio/og-image.png"],
   },
 };
 

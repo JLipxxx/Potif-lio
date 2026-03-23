@@ -4,6 +4,7 @@ import { Trophy, Target, Award, Play, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { staggerContainer, staggerContainerSlow, fadeInUp, scaleIn, hoverLift, hoverGlow } from "@/lib/animations";
 import { usePortfolioStore } from "@/store/usePortfolioStore";
+import { cyberAudio } from "@/lib/audio";
 
 export default function AchievementsBento() {
   const { achievements } = portfolioData;
@@ -12,8 +13,10 @@ export default function AchievementsBento() {
   const addToHistory = usePortfolioStore((state) => state.addToHistory);
 
   const handlePrimaryClick = () => {
+    cyberAudio.playClick();
     addToHistory({ command: `./analyze_achievement.sh --target="Global Winner"` });
     setTimeout(() => {
+      cyberAudio.playSuccess();
       addToHistory({
         output: (
           <div className="text-[#60a5fa] font-mono whitespace-pre-wrap">
@@ -31,9 +34,11 @@ export default function AchievementsBento() {
   };
 
   const handleSecondaryClick = (title: string, description: string, id: number) => {
+    cyberAudio.playClick();
     const safeTitle = title.split(' ')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
     addToHistory({ command: `tail -n 12 /var/log/achievements/${safeTitle}_${id}.log` });
     setTimeout(() => {
+      cyberAudio.playSuccess();
       addToHistory({
         output: `[INFO] ${new Date().toISOString()} - EVENT: ${title}\n[DESC] ${description}\n[SUCCESS] Event validated. Operation executed flawlessly.`,
         isSystem: true

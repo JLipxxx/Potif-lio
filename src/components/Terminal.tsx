@@ -3,6 +3,7 @@ import { usePortfolioStore } from "@/store/usePortfolioStore";
 import { Terminal as TerminalIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { terminalEntry } from "@/lib/animations";
+import { cyberAudio } from "@/lib/audio";
 
 export default function Terminal() {
   const [input, setInput] = useState("");
@@ -20,15 +21,23 @@ export default function Terminal() {
     if (typingCommand) {
       let i = 0;
       setInput("");
+      
+      // Attempt activation context immediately
+      cyberAudio.enable();
+      
       const interval = setInterval(() => {
         setInput(typingCommand.slice(0, i + 1));
+        cyberAudio.playKeystroke();
+        
         i++;
         if (i >= typingCommand.length) {
           clearInterval(interval);
           setTimeout(() => {
+             // Let terminal execute
             executeCommand(typingCommand);
             setInput("");
             setTypingCommand(null);
+            cyberAudio.playKeystroke(); // Final Enter key sound
           }, 400);
         }
       }, 50);
@@ -38,6 +47,7 @@ export default function Terminal() {
   }, [typingCommand, executeCommand, setTypingCommand]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    cyberAudio.playKeystroke();
     if (e.key === "Enter" && input.trim()) {
       if (typingCommand) return;
       executeCommand(input);

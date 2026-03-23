@@ -1,0 +1,99 @@
+src/components/Navigation.tsx(5,49): error TS2305: Module '"@/lib/animations"' has no exported member 'tapShrink'.
+src/components/Navigation.tsx(50,15): error TS2322: Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition | VariantLabels | undefined'.
+  Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition'.
+    Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues$1 | undefined; }'.
+      Types of property 'transition' are incompatible.
+        Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'Transition<any> | undefined'.
+          Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+            Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+              Types of property 'type' are incompatible.
+                Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+src/components/Terminal.tsx(5,10): error TS2305: Module '"@/lib/animations"' has no exported member 'terminalEntry'.
+src/components/ui/GithubStats.tsx(104,15): error TS2322: Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition | VariantLabels | undefined'.
+  Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition'.
+    Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues$1 | undefined; }'.
+      Types of property 'transition' are incompatible.
+        Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'Transition<any> | undefined'.
+          Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+            Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+              Types of property 'type' are incompatible.
+                Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+src/components/views/AchievementsBento.tsx(74,13): error TS2322: Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition | VariantLabels | undefined'.
+  Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition'.
+    Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues$1 | undefined; }'.
+      Types of property 'transition' are incompatible.
+        Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'Transition<any> | undefined'.
+          Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+            Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+              Types of property 'type' are incompatible.
+                Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+src/components/views/AchievementsBento.tsx(114,13): error TS2322: Type '{ boxShadow: string; scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition | VariantLabels | undefined'.
+  Type '{ boxShadow: string; scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'undefined'.
+src/components/views/CertificationsGrid.tsx(75,11): error TS2322: Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition | VariantLabels | undefined'.
+  Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition'.
+    Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues$1 | undefined; }'.
+      Types of property 'transition' are incompatible.
+        Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'Transition<any> | undefined'.
+          Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+            Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+              Types of property 'type' are incompatible.
+                Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+src/components/views/CertificationsGrid.tsx(126,15): error TS2322: Type '{ boxShadow: string; scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition | VariantLabels | undefined'.
+  Type '{ boxShadow: string; scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'undefined'.
+src/components/views/CertificationsGrid.tsx(136,17): error TS2322: Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'Transition<any> | undefined'.
+  Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+    Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+      Types of property 'type' are incompatible.
+        Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+src/components/views/ExperienceTimeline.tsx(16,42): error TS2322: Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'Transition<any> | undefined'.
+  Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+    Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+      Types of property 'type' are incompatible.
+        Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+src/components/views/ExperienceTimeline.tsx(61,93): error TS2322: Type '{ hidden: { pathLength: number; opacity: number; }; visible: { pathLength: number; opacity: number; transition: { duration: number; ease: string; }; }; }' is not assignable to type 'Variants'.
+  Property 'visible' is incompatible with index signature.
+    Type '{ pathLength: number; opacity: number; transition: { duration: number; ease: string; }; }' is not assignable to type 'Variant'.
+      Type '{ pathLength: number; opacity: number; transition: { duration: number; ease: string; }; }' is not assignable to type 'TargetAndTransition'.
+        Type '{ pathLength: number; opacity: number; transition: { duration: number; ease: string; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues$1 | undefined; }'.
+          Types of property 'transition' are incompatible.
+            Type '{ duration: number; ease: string; }' is not assignable to type 'Transition<any> | undefined'.
+              Type '{ duration: number; ease: string; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+                Type '{ duration: number; ease: string; }' is not assignable to type 'ValueAnimationTransition<any>'.
+                  Types of property 'ease' are incompatible.
+                    Type 'string' is not assignable to type 'Easing | Easing[] | undefined'.
+src/components/views/ExperienceTimeline.tsx(70,104): error TS2322: Type '{ boxShadow: string; scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition | VariantLabels | undefined'.
+  Type '{ boxShadow: string; scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'undefined'.
+src/components/views/HeroSection.tsx(133,9): error TS2322: Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition | VariantLabels | undefined'.
+  Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition'.
+    Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues$1 | undefined; }'.
+      Types of property 'transition' are incompatible.
+        Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'Transition<any> | undefined'.
+          Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+            Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+              Types of property 'type' are incompatible.
+                Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+src/components/views/HeroSection.tsx(154,13): error TS2322: Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition | VariantLabels | undefined'.
+  Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition'.
+    Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues$1 | undefined; }'.
+      Types of property 'transition' are incompatible.
+        Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'Transition<any> | undefined'.
+          Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+            Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+              Types of property 'type' are incompatible.
+                Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+src/components/views/HeroSection.tsx(164,13): error TS2322: Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition | VariantLabels | undefined'.
+  Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type 'TargetAndTransition'.
+    Type '{ scale: number; y: number; transition: { type: string; stiffness: number; damping: number; }; }' is not assignable to type '{ transition?: Transition<any> | undefined; transitionEnd?: ResolvedValues$1 | undefined; }'.
+      Types of property 'transition' are incompatible.
+        Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'Transition<any> | undefined'.
+          Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+            Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+              Types of property 'type' are incompatible.
+                Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.
+src/components/views/SkillsDashboard.tsx(145,21): error TS2322: Type '{ scale: number; backgroundColor: string; transition: { type: string; stiffness: number; damping: number; }; boxShadow: string; }' is not assignable to type 'TargetAndTransition | VariantLabels | undefined'.
+  Types of property 'transition' are incompatible.
+    Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'Transition<any> | undefined'.
+      Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'TransitionWithValueOverrides<any>'.
+        Type '{ type: string; stiffness: number; damping: number; }' is not assignable to type 'ValueAnimationTransition<any>'.
+          Types of property 'type' are incompatible.
+            Type 'string' is not assignable to type 'AnimationGeneratorType | undefined'.

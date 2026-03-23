@@ -4,6 +4,7 @@ import { GraduationCap, ShieldCheck } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import { staggerContainer, fadeInUp, scaleIn, hoverLift, hoverGlow, springSmooth } from "@/lib/animations";
 import { usePortfolioStore } from "@/store/usePortfolioStore";
+import { cyberAudio } from "@/lib/audio";
 
 const gridStagger: Variants = {
   hidden: { opacity: 0 },
@@ -20,8 +21,10 @@ export default function CertificationsGrid() {
   const addToHistory = usePortfolioStore((state) => state.addToHistory);
 
   const handleEducationClick = () => {
+    cyberAudio.playClick();
     addToHistory({ command: `verify_degree --institution="UNICAP"` });
     setTimeout(() => {
+      cyberAudio.playSuccess();
       addToHistory({
         output: (
           <div className="text-brand-cyan">
@@ -38,9 +41,11 @@ export default function CertificationsGrid() {
   };
 
   const handleCertClick = (certName: string) => {
+    cyberAudio.playClick();
     const slug = certName.toLowerCase().replace(/[^a-z0-9]/g, '-').substring(0, 10);
     addToHistory({ command: `validate_cert --id="${slug}"` });
     setTimeout(() => {
+      cyberAudio.playSuccess();
       addToHistory({
         output: `[+] Certificate: ${certName}\n[+] Descrição: Formação formal e validação de proficiência técnica.\n[SUCCESS] Integrity verified via Authority. Certificate is VALID and active.`,
         isSystem: true

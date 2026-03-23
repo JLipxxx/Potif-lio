@@ -4,6 +4,7 @@ import { Clock, Activity } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import { staggerContainer, fadeInUp, drawLine, hoverLift, hoverGlow, springBouncy } from "@/lib/animations";
 import { usePortfolioStore } from "@/store/usePortfolioStore";
+import { cyberAudio } from "@/lib/audio";
 
 const nodeVariant: Variants = {
   hidden: { scale: 0, opacity: 0 },
@@ -20,11 +21,12 @@ export default function ExperienceTimeline() {
   const addToHistory = usePortfolioStore((state) => state.addToHistory);
 
   const handleExperienceClick = (company: string, role: string, description: string) => {
-    // Escape specific chars for simulated command
+    cyberAudio.playClick();
     const safeCompany = company.replace(/[^a-zA-Z0-9]/g, '_');
     addToHistory({ command: `git log --author="JFSF" --grep="${safeCompany}"` });
     
     setTimeout(() => {
+      cyberAudio.playSuccess();
       addToHistory({
         output: (
           <div className="font-mono text-xs md:text-sm">

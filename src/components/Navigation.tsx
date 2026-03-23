@@ -3,6 +3,7 @@ import { User, Award, Shield, Briefcase, FileCode } from "lucide-react";
 import { usePortfolioStore, ViewType } from "@/store/usePortfolioStore";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp, hoverLift, tapShrink } from "@/lib/animations";
+import { cyberAudio } from "@/lib/audio";
 
 const navItems: { id: ViewType; label: string; icon: React.ReactNode; cmd: string }[] = [
   { id: "hero", label: "Perfil", icon: <User size={18} />, cmd: "whoami" },
@@ -17,6 +18,7 @@ export default function Navigation() {
   const setTypingCommand = usePortfolioStore((state) => state.setTypingCommand);
 
   const handleNavClick = (cmd: string) => {
+    cyberAudio.playClick();
     setTypingCommand(cmd);
   };
 

@@ -5,6 +5,8 @@ import { Layers } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import { staggerContainer, staggerContainerSlow, fadeInUp, scaleIn, hoverLift, hoverGlow, springSmooth } from "@/lib/animations";
 import { usePortfolioStore } from "@/store/usePortfolioStore";
+import { cyberAudio } from "@/lib/audio";
+import GithubStats from "@/components/ui/GithubStats";
 
 const RadarCustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
@@ -33,8 +35,10 @@ export default function SkillsDashboard() {
   const addToHistory = usePortfolioStore((state) => state.addToHistory);
 
   const handleRadarScan = () => {
+    cyberAudio.playClick();
     addToHistory({ command: `nmap -sV -p- arsenal.local --script=vuln` });
     setTimeout(() => {
+      cyberAudio.playSuccess();
       addToHistory({
         output: (
           <div className="text-brand-text">
@@ -50,8 +54,10 @@ export default function SkillsDashboard() {
   };
 
   const handleSkillScan = (skillName: string, category: string) => {
+    cyberAudio.playClick();
     addToHistory({ command: `scan_capability --target="${skillName}"` });
     setTimeout(() => {
+      cyberAudio.playSuccess();
       addToHistory({
         output: `[+] Module loaded: ${skillName}\n[+] Categoria: ${category}\n[+] Info: Habilidade estratégica utilizada no escopo arquitetural.\n[+] Status: Optimal. Ready for deployment.`,
         isSystem: true
@@ -149,6 +155,8 @@ export default function SkillsDashboard() {
           ))}
         </motion.div>
       </div>
+
+      <GithubStats />
     </motion.div>
   );
 }

@@ -1,17 +1,21 @@
 import React from "react";
 import { portfolioData } from "@/data/portfolio";
-import { Terminal as TerminalIcon, ShieldCheck, Mail } from "lucide-react";
+import { Download, Terminal as TerminalIcon, ShieldCheck, Mail } from "lucide-react";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp, fadeInLeft, letterContainer, letterChild, hoverLift } from "@/lib/animations";
 import { usePortfolioStore } from "@/store/usePortfolioStore";
+import { cyberAudio } from "@/lib/audio";
+import DownloadProgress from "@/components/ui/DownloadProgress";
 
 export default function HeroSection() {
   const { profile } = portfolioData;
   const addToHistory = usePortfolioStore((state) => state.addToHistory);
 
   const handleAuthClick = () => {
+    cyberAudio.playClick();
     addToHistory({ command: `systemctl status auth.service` });
     setTimeout(() => {
+      cyberAudio.playSuccess();
       addToHistory({
         output: (
            <div className="text-brand-neon">
@@ -26,9 +30,31 @@ export default function HeroSection() {
     }, 400);
   };
 
+  const handleDownloadCV = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    cyberAudio.playClick();
+    addToHistory({ command: `wget https://jfsf.dev/resume.pdf` });
+    setTimeout(() => {
+      addToHistory({
+        output: <DownloadProgress onComplete={() => {
+          const link = document.createElement("a");
+          link.href = "/resume.pdf";
+          link.target = "_blank";
+          link.download = "JoaoFelipe_Resume.pdf";
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }} />,
+        isSystem: true
+      });
+    }, 400);
+  };
+
   const handleBioClick = () => {
+    cyberAudio.playClick();
     addToHistory({ command: `curl -X GET https://api.jfsf.local/v1/bio` });
     setTimeout(() => {
+      cyberAudio.playSuccess();
       addToHistory({
         output: (
           <pre className="text-brand-cyan whitespace-pre-wrap font-mono text-xs mt-1">
@@ -132,16 +158,17 @@ export default function HeroSection() {
             <Mail size={16} className="text-brand-cyan" />
             {profile.contact}
           </motion.a>
-          <motion.div
-            className="flex items-center gap-2 py-2 px-4 rounded-lg bg-brand-surface-light text-brand-heading w-fit cursor-help"
+          <motion.button
+            className="flex items-center gap-2 py-2 px-4 rounded-lg bg-brand-cyan/10 text-brand-cyan hover:bg-brand-cyan/20 border border-brand-cyan/20 transition-colors text-brand-heading w-fit cursor-pointer"
             variants={fadeInUp}
             whileHover={hoverLift}
-            onClick={(e) => { e.stopPropagation(); addToHistory({ output: "Status: Operations Active. All systems nominal.", isSystem: true }); }}
-            title="Verificar Operações"
+            whileTap={{ scale: 0.95 }}
+            onClick={handleDownloadCV}
+            title="Download Full Resume"
           >
-            <TerminalIcon size={16} className="text-brand-neon" />
-            Status: Operations Active
-          </motion.div>
+            <Download size={16} />
+            Baixar CV (.pdf)
+          </motion.button>
         </motion.div>
       </motion.div>
     </motion.div>
