@@ -38,7 +38,7 @@ export default function HeroSection() {
       addToHistory({
         output: <DownloadProgress onComplete={() => {
           const link = document.createElement("a");
-          link.href = "/resume.pdf";
+          link.href = process.env.NODE_ENV === "production" ? "/Potif-lio/resume.pdf" : "/resume.pdf";
           link.target = "_blank";
           link.download = "JoaoFelipe_Resume.pdf";
           document.body.appendChild(link);

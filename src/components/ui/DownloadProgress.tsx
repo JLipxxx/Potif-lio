@@ -57,7 +57,7 @@ export default function DownloadProgress({ onComplete }: { onComplete: () => voi
           <span className="text-brand-neon">[SUCCESS] File extracted. Initiating download protocol...</span>
           <br />
           <span className="text-brand-text/70 mt-1 block">
-            Se o download não foi iniciado, <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="text-brand-neon underline hover:text-white transition-colors">clique aqui para abrir manualmente</a>.
+            Se o download não foi iniciado, <a href={process.env.NODE_ENV === "production" ? "/Potif-lio/resume.pdf" : "/resume.pdf"} target="_blank" rel="noopener noreferrer" className="text-brand-neon underline hover:text-white transition-colors">clique aqui para abrir manualmente</a>.
           </span>
         </div>
       )}
