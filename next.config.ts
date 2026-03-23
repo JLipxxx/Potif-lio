@@ -4,10 +4,13 @@ import type { NextConfig } from "next";
 // configured on your hosting server (Vercel/Nginx/Apache) since
 // Next.js headers() does not work with output: 'export'.
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig: NextConfig = {
   output: 'export',
-  basePath: '/Potif-lio',
-  assetPrefix: '/Potif-lio/',
+  // Only apply basePath in production (GitHub Pages) to avoid 404 on localhost
+  basePath: isProd ? '/Potif-lio' : '',
+  assetPrefix: isProd ? '/Potif-lio/' : '',
   images: {
     unoptimized: true, // Required for next/image during Export
   },
