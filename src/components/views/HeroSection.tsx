@@ -1,6 +1,6 @@
 import React from "react";
 import { portfolioData } from "@/data/portfolio";
-import { ShieldAlert, Terminal as TerminalIcon, ShieldCheck, Mail } from "lucide-react";
+import { Terminal as TerminalIcon, ShieldCheck, Mail } from "lucide-react";
 
 export default function HeroSection() {
   const { profile } = portfolioData;

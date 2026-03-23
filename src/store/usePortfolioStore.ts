@@ -1,3 +1,4 @@
+import type React from 'react';
 import { create } from 'zustand';
 
 export type ViewType = 'hero' | 'achievements' | 'skills' | 'experience' | 'certifications';
@@ -42,7 +43,7 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
   setActiveView: (view) => set({ activeView: view }),
   
   addToHistory: (entry) => set((state) => ({
-    terminalHistory: [...state.terminalHistory, { ...entry, id: Date.now().toString() + Math.random().toString(36).substr(2, 9) }]
+    terminalHistory: [...state.terminalHistory, { ...entry, id: Date.now().toString() + Math.random().toString(36).substring(2, 11) }]
   })),
 
   clearHistory: () => set({ terminalHistory: [] }),
