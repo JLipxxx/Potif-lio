@@ -22,7 +22,7 @@ export default function CertificationsGrid() {
 
   const handleEducationClick = () => {
     cyberAudio.playClick();
-    addToHistory({ command: `verify_degree --institution="UNICAP"` });
+    addToHistory({ command: `verify_degree --tag="UNIT_Aracaju"` });
     setTimeout(() => {
       cyberAudio.playSuccess();
       addToHistory({
@@ -30,7 +30,7 @@ export default function CertificationsGrid() {
           <div className="text-brand-cyan">
             [+] Requesting strict institutional verification...<br/>
             [+] Signature: Valid.<br/>
-            [+] Institution: Universidade Católica de Pernambuco<br/>
+            [+] Institution: Universidade Tiradentes (UNIT Aracaju)<br/>
             [+] Student Status: Enrolled.<br/>
             <span className="text-brand-neon">Hash Matched: 0x9f3b2a1c... STATUS SECURE</span>
           </div>
