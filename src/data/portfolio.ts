@@ -55,7 +55,7 @@ export const portfolioData: PortfolioData = {
   },
   achievements: [
     {
-      title: "Vencedor Global NASA Space Apps Challenge (Equipe Pureflow)",
+      title: "Vencedor Global NASA Space Apps Challenge (Equipe Pureflow) - 2025",
       description: "Única equipe brasileira premiada globalmente nesta edição.",
       isPrimary: true
     },

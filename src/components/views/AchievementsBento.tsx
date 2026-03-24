@@ -19,12 +19,12 @@ export default function AchievementsBento() {
       cyberAudio.playSuccess();
       addToHistory({
         output: (
-          <div className="text-[#60a5fa] font-mono whitespace-pre-wrap">
+          <div className="text-brand-cyan font-mono whitespace-pre-wrap">
             [SYS] Initializing Impact Analysis Protocol...<br/>
             [+] Metrics parsed success.<br/>
             [+] Competition scope: GLOBAL.<br/>
             [+] Outperformed: 10,000+ nodes.<br/>
-            [+] Status: VICTORY ACHIEVED.<br/>
+            <span className="text-brand-neon">[+] Status: VICTORY ACHIEVED.</span><br/>
             [SYS] End of analysis.
           </div>
         ),
@@ -54,7 +54,7 @@ export default function AchievementsBento() {
       animate="visible"
     >
       <motion.div className="flex items-center gap-3 mb-4" variants={fadeInUp}>
-        <Trophy className="text-yellow-400" size={28} />
+        <Trophy className="text-brand-neon" size={28} />
         <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
           Highlight & Achievements
         </h2>
@@ -69,35 +69,35 @@ export default function AchievementsBento() {
         {/* Primary Card */}
         {primary && (
           <motion.div
-            className="md:col-span-2 lg:col-span-2 row-span-2 bg-gradient-to-br from-[#0f172a] to-blue-900/40 p-6 md:p-8 rounded-2xl border border-blue-500/20 relative overflow-hidden group cursor-pointer"
+            className="md:col-span-2 lg:col-span-2 row-span-2 bg-brand-surface-light p-6 md:p-8 rounded-2xl border border-brand-neon/20 relative overflow-hidden group cursor-pointer"
             variants={scaleIn}
             whileHover={hoverLift}
             whileTap={{ scale: 0.98 }}
             onClick={handlePrimaryClick}
             title="Analisar Conquista Global"
           >
-            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[80px] rounded-full pointer-events-none opacity-50" />
+            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-neon/5 blur-[80px] rounded-full pointer-events-none opacity-50" />
 
             <div className="relative z-10 flex flex-col h-full justify-between">
               <div>
                 <motion.span
-                  className="inline-flex items-center gap-2 bg-yellow-400/10 text-yellow-400 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4 shimmer"
+                  className="inline-flex items-center gap-2 bg-brand-neon/10 text-brand-neon px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4 shimmer border border-brand-neon/30"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.4, type: "spring", stiffness: 300 }}
                 >
                   <Award size={14} /> Global Winner
                 </motion.span>
-                <h3 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight break-words">
+                <h3 className="text-2xl md:text-4xl font-bold text-brand-heading mb-4 leading-tight break-words">
                   {primary.title}
                 </h3>
-                <p className="text-lg text-blue-200/80">
+                <p className="text-lg text-brand-text">
                   {primary.description}
                 </p>
               </div>
 
               <motion.div
-                className="mt-8 flex justify-end opacity-50 font-mono text-sm text-blue-300 group-hover:opacity-100 transition-opacity"
+                className="mt-8 flex justify-end opacity-50 font-mono text-sm text-brand-cyan group-hover:opacity-100 transition-opacity"
               >
                 {">"} Click to execute system analysis...
               </motion.div>
