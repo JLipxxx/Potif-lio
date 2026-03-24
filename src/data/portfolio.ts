@@ -3,6 +3,7 @@ export interface Profile {
   role: string;
   bio: string;
   contact: string;
+  linkedin: string;
 }
 
 export interface Achievement {
@@ -49,7 +50,8 @@ export const portfolioData: PortfolioData = {
     name: "João Felipe Silva Freitas",
     role: "Analista de Cibersegurança",
     bio: "Estudante de Ciência da Computação (7º período) focado em operações de Blue Team. Atuação focada na redução estratégica da superfície de ataque, mitigação de vulnerabilidades em endpoints, servidores e atuação direta em respostas a incidentes. Busco aliar governança e automação para elevar a maturidade de segurança em ambientes corporativos.",
-    contact: "jfelipesfreitas@gmail.com"
+    contact: "jfelipesfreitas@gmail.com",
+    linkedin: "https://www.linkedin.com/in/joão-felipe-freitas-912392292"
   },
   achievements: [
     {

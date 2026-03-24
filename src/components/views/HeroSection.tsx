@@ -1,6 +1,6 @@
 import React from "react";
 import { portfolioData } from "@/data/portfolio";
-import { Download, Terminal as TerminalIcon, ShieldCheck, Mail } from "lucide-react";
+import { Download, Terminal as TerminalIcon, ShieldCheck, Mail, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import { staggerContainer, fadeInUp, fadeInLeft, letterContainer, letterChild, hoverLift } from "@/lib/animations";
 import { usePortfolioStore } from "@/store/usePortfolioStore";
@@ -135,7 +135,7 @@ export default function HeroSection() {
         </p>
 
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 mt-8 relative z-10 w-full pt-4 border-t border-white/5"
+          className="flex flex-col sm:flex-row flex-wrap gap-4 mt-8 relative z-10 w-full pt-4 border-t border-white/5"
           variants={staggerContainer}
           initial="hidden"
           animate="visible"
@@ -143,17 +143,35 @@ export default function HeroSection() {
           <motion.a
             href={`mailto:${profile.contact}`}
             onClick={(e) => { e.stopPropagation(); addToHistory({ command: `mail -s "Contact" ${profile.contact}` }); }}
-            className="flex items-center gap-2 py-2 px-4 rounded-lg bg-brand-surface-light hover:bg-white/10 transition-colors text-brand-heading w-fit"
+            className="flex items-center gap-2 py-2 px-4 rounded-lg bg-brand-surface-light border border-white/10 hover:bg-white/10 transition-colors text-brand-heading w-fit shrink-0"
             variants={fadeInUp}
             whileHover={hoverLift}
             whileTap={{ scale: 0.97 }}
             title="Enviar E-mail Seguro"
           >
             <Mail size={16} className="text-brand-cyan" />
-            {profile.contact}
+            E-mail
           </motion.a>
+
+          {profile.linkedin && (
+            <motion.a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => { e.stopPropagation(); cyberAudio.playClick(); addToHistory({ command: `curl ${profile.linkedin}` }); }}
+              className="flex items-center gap-2 py-2 px-4 rounded-lg bg-[#0077b5]/10 border border-[#0077b5]/30 hover:bg-[#0077b5]/20 transition-colors text-brand-heading w-fit shrink-0"
+              variants={fadeInUp}
+              whileHover={hoverLift}
+              whileTap={{ scale: 0.97 }}
+              title="Acessar Perfil no LinkedIn"
+            >
+              <Linkedin size={16} className="text-[#00e5ff]" />
+              LinkedIn
+            </motion.a>
+          )}
+
           <motion.button
-            className="flex items-center gap-2 py-2 px-4 rounded-lg bg-brand-cyan/10 text-brand-cyan hover:bg-brand-cyan/20 border border-brand-cyan/20 transition-colors text-brand-heading w-fit cursor-pointer"
+            className="flex items-center gap-2 py-2 px-4 rounded-lg bg-brand-cyan/10 text-brand-cyan hover:bg-brand-cyan/20 border border-brand-cyan/20 transition-colors text-brand-heading w-fit cursor-pointer shrink-0"
             variants={fadeInUp}
             whileHover={hoverLift}
             whileTap={{ scale: 0.95 }}
