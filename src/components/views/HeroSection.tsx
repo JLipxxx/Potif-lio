@@ -143,10 +143,9 @@ export default function HeroSection() {
           <motion.a
             href={`mailto:${profile.contact}`}
             onClick={(e) => { e.stopPropagation(); addToHistory({ command: `mail -s "Contact" ${profile.contact}` }); }}
-            className="flex items-center gap-2 py-2 px-4 rounded-lg bg-brand-surface-light border border-white/10 hover:bg-white/10 transition-colors text-brand-heading w-fit shrink-0"
+            className="flex items-center justify-center gap-2 py-3 sm:py-2 px-4 rounded-lg bg-brand-surface-light border border-white/10 hover:bg-white/10 transition-colors text-brand-heading w-full sm:w-fit shrink-0 active:scale-95"
             variants={fadeInUp}
             whileHover={hoverLift}
-            whileTap={{ scale: 0.97 }}
             title="Enviar E-mail Seguro"
           >
             <Mail size={16} className="text-brand-cyan" />
@@ -159,10 +158,9 @@ export default function HeroSection() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => { e.stopPropagation(); cyberAudio.playClick(); addToHistory({ command: `curl ${profile.linkedin}` }); }}
-              className="flex items-center gap-2 py-2 px-4 rounded-lg bg-brand-surface-light border border-white/10 hover:bg-white/10 transition-colors text-brand-heading w-fit shrink-0"
+              className="flex items-center justify-center gap-2 py-3 sm:py-2 px-4 rounded-lg bg-brand-surface-light border border-white/10 hover:bg-white/10 transition-colors text-brand-heading w-full sm:w-fit shrink-0 active:scale-95"
               variants={fadeInUp}
               whileHover={hoverLift}
-              whileTap={{ scale: 0.97 }}
               title="Acessar Perfil no LinkedIn"
             >
               <Linkedin size={16} className="text-brand-cyan" />
@@ -171,10 +169,9 @@ export default function HeroSection() {
           )}
 
           <motion.button
-            className="flex items-center gap-2 py-2 px-4 rounded-lg bg-brand-cyan/10 text-brand-cyan hover:bg-brand-cyan/20 border border-brand-cyan/20 transition-colors text-brand-heading w-fit cursor-pointer shrink-0"
+            className="flex items-center justify-center gap-2 py-3 sm:py-2 px-4 rounded-lg bg-brand-cyan/10 text-brand-cyan hover:bg-brand-cyan/20 border border-brand-cyan/20 transition-colors text-brand-heading w-full sm:w-fit cursor-pointer shrink-0 active:scale-95"
             variants={fadeInUp}
             whileHover={hoverLift}
-            whileTap={{ scale: 0.95 }}
             onClick={handleDownloadCV}
             title="Download Full Resume"
           >

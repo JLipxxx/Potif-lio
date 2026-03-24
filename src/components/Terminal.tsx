@@ -70,13 +70,13 @@ export default function Terminal() {
       <div className="h-10 bg-brand-surface-light/50 border-b border-white/5 flex items-center px-4 gap-3 shrink-0">
         <div className="flex gap-2">
           {[
-            "bg-brand-surface-light border border-white/10 hover:bg-brand-neon/80",
-            "bg-brand-surface-light border border-white/10 hover:bg-brand-neon/80",
-            "bg-brand-surface-light border border-white/10 hover:bg-brand-neon/80",
-          ].map((classes, i) => (
+            "bg-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.4)]",
+            "bg-yellow-500/80 shadow-[0_0_8px_rgba(234,179,8,0.4)]",
+            "bg-green-500/80 shadow-[0_0_8px_rgba(34,197,94,0.4)]",
+          ].map((color, i) => (
             <motion.div
               key={i}
-              className={`w-3 h-3 rounded-full transition-colors duration-300 ${classes}`}
+              className={`w-3 h-3 rounded-full ${color}`}
               whileHover={{ scale: 1.4 }}
               transition={{ type: "spring", stiffness: 500, damping: 20 }}
             />

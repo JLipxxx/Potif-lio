@@ -114,16 +114,20 @@ export default function SkillsDashboard() {
           initial="hidden"
           animate="visible"
         >
-          {skills.categories.map((cat, idx) => (
+          {skills.categories.map((cat, idx) => {
+            const accentColors = ["text-red-500", "text-yellow-500", "text-green-500", "text-brand-cyan"];
+            const borderColors = ["border-red-500/30", "border-yellow-500/30", "border-green-500/30", "border-brand-cyan/30"];
+            
+            return (
             <motion.div
               key={idx}
-              className="bg-[#0b111a] border border-[#1e293b] rounded-xl p-5"
+              className="bg-brand-surface border border-white/5 rounded-xl p-5 transition-colors duration-300"
               variants={fadeInUp}
-              whileHover={{ borderColor: "rgba(0,255,157,0.15)" }}
+              whileHover={{ borderColor: idx === 0 ? "rgba(239,68,68,0.3)" : idx === 1 ? "rgba(234,179,8,0.3)" : idx === 2 ? "rgba(34,197,94,0.3)" : "rgba(204,204,204,0.3)" }}
             >
               <h3 className="text-sm font-mono text-brand-text mb-3 uppercase tracking-wider flex items-center gap-2">
                 <motion.span
-                  className="text-brand-neon"
+                  className={accentColors[idx % accentColors.length]}
                   animate={{ opacity: [1, 0.5, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
@@ -152,7 +156,8 @@ export default function SkillsDashboard() {
                 ))}
               </motion.div>
             </motion.div>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
 
