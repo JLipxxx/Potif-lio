@@ -11,70 +11,163 @@ export interface TerminalEntry {
   isSystem?: boolean;
 }
 
+/* ─────────────────────────────── AVAILABLE COMMANDS ─────────────────────────────── */
+export const AVAILABLE_COMMANDS = [
+  'whoami',
+  'cat achievements.txt',
+  'analyze skills',
+  'ls ./experience',
+  'cat roadmap.sh',
+  'help',
+  'clear',
+  'cls',
+  'matrix',
+  'reboot',
+  'sudo whoami',
+  'sudo su',
+  'su root',
+  'cat flag.txt',
+  'decrypt_protocol',
+  'theme red',
+  'theme blue',
+] as const;
+
+/* ─────────────────────────────── STATE INTERFACE ─────────────────────────────── */
 interface PortfolioState {
   activeView: ViewType;
   terminalHistory: TerminalEntry[];
   typingCommand: string | null;
-  
+
+  // Command History (Arrow navigation)
+  commandLog: string[];
+  historyIndex: number;
+
   // Easter Eggs
   matrixMode: boolean;
   rebooting: boolean;
   intrusionAlert: boolean;
-  
+
+  // CTF
+  ctfUnlocked: boolean;
+
+  // Theme
+  themeMode: 'blue' | 'red';
+
   // Actions
   setActiveView: (view: ViewType) => void;
   addToHistory: (entry: Omit<TerminalEntry, 'id'>) => void;
   clearHistory: () => void;
   setTypingCommand: (cmd: string | null) => void;
   executeCommand: (cmd: string) => void;
-  
+
+  pushToCommandLog: (cmd: string) => void;
+  navigateHistory: (direction: 'up' | 'down') => string;
+  resetHistoryIndex: () => void;
+
   setMatrixMode: (active: boolean) => void;
   setRebooting: (active: boolean) => void;
   setIntrusionAlert: (active: boolean) => void;
+  setCtfUnlocked: (active: boolean) => void;
+  setThemeMode: (mode: 'blue' | 'red') => void;
 }
 
+/* ─────────────────────────────── UNIQUE ID GENERATOR ─────────────────────────────── */
+const uid = () => Date.now().toString(36) + Math.random().toString(36).substring(2, 9);
+
+/* ─────────────────────────────── STORE ─────────────────────────────── */
 export const usePortfolioStore = create<PortfolioState>((set, get) => ({
   activeView: 'hero',
   terminalHistory: [
     {
       id: 'init-1',
-      output: 'Welcome to JFSF Secure Portfolio Terminal v1.0.0',
+      output: 'Welcome to JFSF Secure Portfolio Terminal v2.0.0',
       isSystem: true
     },
     {
       id: 'init-2',
-      output: 'Type "help" to see available commands or use the visual menu.',
+      output: 'Type "help" to see available commands. Use ↑↓ arrows for history, TAB for autocomplete.',
       isSystem: true
     }
   ],
   typingCommand: null,
-  
+
+  commandLog: [],
+  historyIndex: -1,
+
   matrixMode: false,
   rebooting: false,
   intrusionAlert: false,
 
+  ctfUnlocked: false,
+  themeMode: 'blue',
+
   setActiveView: (view) => set({ activeView: view }),
-  
+
   addToHistory: (entry) => set((state) => ({
-    terminalHistory: [...state.terminalHistory, { ...entry, id: Date.now().toString() + Math.random().toString(36).substring(2, 11) }]
+    terminalHistory: [...state.terminalHistory, { ...entry, id: uid() }]
   })),
 
   clearHistory: () => set({ terminalHistory: [] }),
-
   setTypingCommand: (cmd) => set({ typingCommand: cmd }),
 
+  /* ── Command History Navigation ────────────────────── */
+  pushToCommandLog: (cmd) => set((state) => ({
+    commandLog: [...state.commandLog, cmd],
+    historyIndex: -1,
+  })),
+
+  navigateHistory: (direction) => {
+    const { commandLog, historyIndex } = get();
+    if (commandLog.length === 0) return '';
+
+    let newIndex: number;
+    if (direction === 'up') {
+      newIndex = historyIndex === -1
+        ? commandLog.length - 1
+        : Math.max(0, historyIndex - 1);
+    } else {
+      newIndex = historyIndex === -1
+        ? -1
+        : historyIndex >= commandLog.length - 1
+          ? -1
+          : historyIndex + 1;
+    }
+
+    set({ historyIndex: newIndex });
+    return newIndex === -1 ? '' : commandLog[newIndex];
+  },
+
+  resetHistoryIndex: () => set({ historyIndex: -1 }),
+
+  /* ── Easter Eggs ───────────────────────────────────── */
   setMatrixMode: (v) => set({ matrixMode: v }),
   setRebooting: (v) => set({ rebooting: v }),
   setIntrusionAlert: (v) => set({ intrusionAlert: v }),
+  setCtfUnlocked: (v) => set({ ctfUnlocked: v }),
 
+  /* ── Theme ────────────────────────────────────────── */
+  setThemeMode: (mode) => {
+    set({ themeMode: mode });
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.remove('theme-blue', 'theme-red');
+      document.documentElement.classList.add(`theme-${mode}`);
+    }
+  },
+
+  /* ── Command Execution Engine ──────────────────────── */
   executeCommand: (cmd) => {
     const trimmedCmd = cmd.trim().toLowerCase();
-    const { addToHistory, setActiveView, clearHistory, setMatrixMode, setRebooting, setIntrusionAlert } = get();
+    const {
+      addToHistory, setActiveView, clearHistory,
+      setMatrixMode, setRebooting, setIntrusionAlert,
+      pushToCommandLog, setCtfUnlocked, setThemeMode,
+    } = get();
 
-    // Echo the command
+    // Echo the raw command
     addToHistory({ command: cmd });
+    pushToCommandLog(cmd);
 
-    // Handle Easter Eggs
+    /* ── Easter Eggs ─── */
     if (trimmedCmd === 'matrix') {
       setMatrixMode(true);
       addToHistory({ output: 'Wake up, Neo...', isSystem: true });
@@ -94,19 +187,55 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
       setTimeout(() => setIntrusionAlert(false), 3000);
       return;
     }
-    
+
+    /* ── CTF ─── */
     if (trimmedCmd === 'cat flag.txt') {
-      addToHistory({ output: 'CTF{w3lc0m3_t0_my_s3cur3_p0rtf0l1o}', isSystem: true });
-      import('@/lib/audio').then(m => m.cyberAudio.playSuccess());
+      addToHistory({ output: 'Permission denied. Try harder.', isError: true });
       return;
     }
 
+    if (trimmedCmd === 'decrypt_protocol') {
+      import('@/lib/audio').then(m => m.cyberAudio.playSuccess());
+      setCtfUnlocked(true);
+      addToHistory({
+        output: `┌──────────────────────────────────────────────────────────┐
+│  ██████╗████████╗███████╗    ███████╗██╗      █████╗  ██████╗  │
+│ ██╔════╝╚══██╔══╝██╔════╝    ██╔════╝██║     ██╔══██╗██╔════╝  │
+│ ██║        ██║   █████╗      █████╗  ██║     ███████║██║  ███╗ │
+│ ██║        ██║   ██╔══╝      ██╔══╝  ██║     ██╔══██║██║   ██║ │
+│ ╚██████╗   ██║   ██║         ██║     ███████╗██║  ██║╚██████╔╝ │
+│  ╚═════╝   ╚═╝   ╚═╝         ╚═╝     ╚══════╝╚═╝  ╚═╝ ╚═════╝ │
+├──────────────────────────────────────────────────────────┤
+│  FLAG: CTF{w3lc0m3_t0_my_s3cur3_p0rtf0l1o}              │
+│  Status: 🏆 EXPLORER BADGE UNLOCKED                      │
+│  You found the hidden protocol. Respect.                  │
+└──────────────────────────────────────────────────────────┘`,
+        isSystem: true,
+      });
+      return;
+    }
+
+    /* ── Theme Toggle ─── */
+    if (trimmedCmd === 'theme red') {
+      setThemeMode('red');
+      import('@/lib/audio').then(m => m.cyberAudio.playAlert());
+      addToHistory({ output: '[!] THEME SWITCHED: Red Team Mode activated. Offensive posture engaged.', isSystem: true });
+      return;
+    }
+    if (trimmedCmd === 'theme blue') {
+      setThemeMode('blue');
+      import('@/lib/audio').then(m => m.cyberAudio.playSuccess());
+      addToHistory({ output: '[+] THEME SWITCHED: Blue Team Mode restored. Defensive posture engaged.', isSystem: true });
+      return;
+    }
+
+    /* ── System Commands ─── */
     if (trimmedCmd === 'clear' || trimmedCmd === 'cls') {
       clearHistory();
       return;
     }
 
-    // Map Commands to Views
+    /* ── Navigation Commands ─── */
     switch (trimmedCmd) {
       case 'whoami':
         setActiveView('hero');
@@ -129,14 +258,29 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
         addToHistory({ output: 'Executing roadmap.sh... Rendering Certifications.' });
         break;
       case 'help':
-        addToHistory({ 
-          output: `Available commands:
-  whoami               - View profile & bio
-  cat achievements.txt - View highlights and achievements
-  analyze skills       - Analyze technology arsenal
-  ls ./experience      - View professional timeline
-  cat roadmap.sh       - View education & certifications
-  clear                - Clear terminal output`
+        addToHistory({
+          output: (
+            `┌─────────────────────────────────────────────────────────────┐
+│                    JFSF TERMINAL v2.0 — HELP                │
+├─────────────────────────┬───────────────────────────────────┤
+│  COMMAND                │  DESCRIPTION                      │
+├─────────────────────────┼───────────────────────────────────┤
+│  whoami                 │  Exibir perfil e biografia        │
+│  cat achievements.txt   │  Ver conquistas e destaques       │
+│  analyze skills         │  Analisar arsenal tecnológico     │
+│  ls ./experience        │  Ver timeline profissional        │
+│  cat roadmap.sh         │  Ver formação e certificações     │
+├─────────────────────────┼───────────────────────────────────┤
+│  clear / cls            │  Limpar saída do terminal         │
+│  theme red              │  Ativar modo Red Team             │
+│  theme blue             │  Restaurar modo Blue Team         │
+├─────────────────────────┼───────────────────────────────────┤
+│  ↑ / ↓                  │  Navegar histórico de comandos    │
+│  TAB                    │  Autocompletar comando            │
+├─────────────────────────┼───────────────────────────────────┤
+│  ██ EASTER EGGS ██      │  Descubra os segredos...          │
+└─────────────────────────┴───────────────────────────────────┘`
+          ),
         });
         break;
       default:

@@ -48,6 +48,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR">
+      <head>
+        <link rel="manifest" href={process.env.NODE_ENV === 'production' ? '/Potif-lio/manifest.json' : '/manifest.json'} />
+        <meta name="theme-color" content="#000000" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        {/* CTF Breadcrumb — discoverable via browser DevTools */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          console.log("%c[INTEL] Hint: There is a hidden protocol in this system.", "color: #00ff00; font-family: monospace; font-size: 14px;");
+          console.log("%c[INTEL] Try: atob('ZGVjcnlwdF9wcm90b2NvbA==')", "color: #aaaaaa; font-family: monospace; font-size: 12px;");
+        ` }} />
+      </head>
       <body
         className={`${inter.variable} ${firaCode.variable} antialiased font-sans flex flex-col min-h-screen lg:h-screen lg:overflow-hidden selection:bg-brand-neon selection:text-brand-bg bg-brand-bg`}
       >

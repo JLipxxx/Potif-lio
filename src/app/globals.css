@@ -106,3 +106,29 @@
 .neon-sweep-line {
   animation: neon-sweep 4s ease-in-out infinite;
 }
+
+/* ============================================
+   V5 — Red Team Theme Override
+   ============================================ */
+html.theme-red {
+  --color-brand-neon: #ff0000;
+  --color-brand-cyan: #888888;
+  --color-brand-alert: #ff3333;
+}
+
+html.theme-red .glass-panel {
+  background: rgba(30, 0, 0, 0.7);
+  border-color: rgba(255, 0, 0, 0.08);
+}
+
+/* ============================================
+   V5 — CTF Explorer Badge Glow
+   ============================================ */
+@keyframes badge-pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 0, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.8); }
+}
+
+.ctf-badge {
+  animation: badge-pulse 2s ease-in-out infinite;
+}
