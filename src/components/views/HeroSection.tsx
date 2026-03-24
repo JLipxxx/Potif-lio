@@ -104,16 +104,10 @@ export default function HeroSection() {
             {'<'} Hello World {'/>'}
           </motion.span>
           <motion.span
-            variants={letterContainer}
-            initial="hidden"
-            animate="visible"
-            className="inline-block"
+            variants={fadeInLeft}
+            className="inline-block text-brand-neon"
           >
-            {profile.name.split("").map((char, i) => (
-              <motion.span key={i} variants={letterChild} className="inline-block">
-                {char === " " ? "\u00A0" : char}
-              </motion.span>
-            ))}
+            {profile.name}
           </motion.span>
         </h1>
 
