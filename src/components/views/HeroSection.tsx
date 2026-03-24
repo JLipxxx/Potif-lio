@@ -159,13 +159,13 @@ export default function HeroSection() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => { e.stopPropagation(); cyberAudio.playClick(); addToHistory({ command: `curl ${profile.linkedin}` }); }}
-              className="flex items-center gap-2 py-2 px-4 rounded-lg bg-[#0077b5]/10 border border-[#0077b5]/30 hover:bg-[#0077b5]/20 transition-colors text-brand-heading w-fit shrink-0"
+              className="flex items-center gap-2 py-2 px-4 rounded-lg bg-brand-surface-light border border-white/10 hover:bg-white/10 transition-colors text-brand-heading w-fit shrink-0"
               variants={fadeInUp}
               whileHover={hoverLift}
               whileTap={{ scale: 0.97 }}
               title="Acessar Perfil no LinkedIn"
             >
-              <Linkedin size={16} className="text-[#00e5ff]" />
+              <Linkedin size={16} className="text-brand-cyan" />
               LinkedIn
             </motion.a>
           )}
