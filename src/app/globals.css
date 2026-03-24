@@ -19,6 +19,68 @@
     background-color: var(--color-brand-bg);
     color: var(--color-brand-text);
   }
+
+  /* Teclado: foco visível consistente com o tema terminal */
+  :where(a, button, input, textarea, select, summary, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
+    outline: 2px solid var(--color-brand-neon);
+    outline-offset: 2px;
+  }
+
+  :where(input):focus-visible {
+    outline-offset: 0;
+  }
+
+  main:focus-visible {
+    outline: 2px solid var(--color-brand-neon);
+    outline-offset: 0.25rem;
+  }
+}
+
+/* Skip link: visível só ao focar (acessibilidade) */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  background: var(--color-brand-surface-light);
+  color: var(--color-brand-neon);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  border: 1px solid rgba(0, 255, 0, 0.35);
+  transform: translateY(-200%);
+  transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+  outline: 2px solid var(--color-brand-neon);
+  outline-offset: 2px;
+}
+
+/* Navegação horizontal: scroll sem barra visível (mobile) */
+.scroller-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroller-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer::after,
+  .neon-sweep-line,
+  .ctf-badge,
+  .animate-blink {
+    animation: none !important;
+  }
+
+  .shimmer::after {
+    transform: none;
+    opacity: 0.15;
+  }
 }
 
 /* Custom Scrollbar for Terminal and Content */
@@ -131,4 +193,18 @@ html.theme-red .glass-panel {
 
 .ctf-badge {
   animation: badge-pulse 2s ease-in-out infinite;
+}
+
+html.theme-red .ctf-badge {
+  animation-name: badge-pulse-red;
+}
+
+@keyframes badge-pulse-red {
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(255, 0, 0, 0.65);
+  }
 }

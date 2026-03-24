@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { usePortfolioStore, AVAILABLE_COMMANDS } from "@/store/usePortfolioStore";
+import { useVisitorInfo } from "@/hooks/useVisitorInfo";
 import { Terminal as TerminalIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { terminalEntry } from "@/lib/animations";
@@ -12,12 +13,20 @@ export default function Terminal() {
     terminalHistory, executeCommand, typingCommand, setTypingCommand,
     navigateHistory, resetHistoryIndex,
   } = usePortfolioStore();
+  const visitor = useVisitorInfo();
+  const displayIp = visitor.ip === "unavailable" ? "ip unavailable" : visitor.ip;
+  const promptLabel = visitor.guestHandle || "anon-········";
+  const promptLine = `${promptLabel}:~$`;
+  const headerTitle = `${visitor.guestHandle} · ${visitor.browser} · ${visitor.os}`;
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Auto scroll to bottom
+  // Auto scroll to bottom (respeita prefers-reduced-motion)
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const reduce =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    bottomRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
   }, [terminalHistory, typingCommand, input]);
 
   // Click GUI = Auto Type Effect in CLI
@@ -109,14 +118,21 @@ export default function Terminal() {
     cyberAudio.playKeystroke();
   };
 
-  const focusInput = () => {
+  const focusInputIfNotSelecting = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement | null;
+    if (target?.closest("input")) return;
+    const sel = typeof window !== "undefined" ? window.getSelection() : null;
+    if (sel && !sel.isCollapsed) return;
     inputRef.current?.focus();
   };
 
   return (
     <div
-      className="glass-panel w-full h-full rounded-2xl flex flex-col overflow-hidden font-mono text-xs sm:text-sm md:text-base cursor-text border border-white/5"
-      onClick={focusInput}
+      role="region"
+      aria-busy={!!typingCommand}
+      aria-label="Terminal interativo — digite comandos ou use Tab para autocompletar"
+      className="glass-panel w-full h-full rounded-2xl flex flex-col overflow-hidden font-mono text-xs sm:text-sm md:text-base cursor-text border border-white/5 shadow-[0_0_0_1px_rgba(0,255,0,0.04)]"
+      onClick={focusInputIfNotSelecting}
     >
       {/* Terminal Header */}
       <div className="h-10 bg-brand-surface-light/50 border-b border-white/5 flex items-center px-4 gap-3 shrink-0">
@@ -134,14 +150,31 @@ export default function Terminal() {
             />
           ))}
         </div>
-        <div className="flex-1 text-center text-[10px] sm:text-xs text-brand-text/60 font-medium tracking-widest flex items-center justify-center gap-2 truncate">
+        <div className="flex-1 text-center text-[10px] sm:text-xs text-brand-text/60 font-medium tracking-widest flex items-center justify-center gap-2 min-w-0">
           <TerminalIcon size={12} className="text-brand-neon shrink-0" />
-          <span className="truncate">root@jfsf-secure-domain:~</span>
+          <span
+            className="truncate"
+            title={`${headerTitle} · ${visitor.language} · ${visitor.timezone} · ${displayIp}`}
+          >
+            <span className="text-brand-neon/90">{visitor.guestHandle}</span>
+            <span className="text-brand-text/45 font-normal normal-case tracking-normal hidden sm:inline">
+              {" "}
+              · {visitor.browser}
+            </span>
+            <span className="text-brand-text/45 font-normal normal-case tracking-normal hidden md:inline">
+              {" "}
+              · {visitor.os}
+            </span>
+            <span className="text-brand-text/45 font-normal normal-case tracking-normal hidden lg:inline">
+              {" "}
+              · {displayIp}
+            </span>
+          </span>
         </div>
       </div>
 
       {/* Terminal Body */}
-      <div className="p-3 sm:p-4 flex-1 overflow-y-auto w-full break-words">
+      <div className="p-3 sm:p-4 flex-1 overflow-y-auto w-full break-words select-text">
         <AnimatePresence initial={false}>
           {terminalHistory.map((entry) => (
             <motion.div
@@ -150,11 +183,11 @@ export default function Terminal() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="mb-3 whitespace-pre-wrap"
+              className="mb-3 whitespace-pre-wrap select-text"
             >
               {entry.command && (
                 <div className="flex gap-2 text-brand-text">
-                  <span className="text-brand-neon shrink-0">root@jfsf:~$</span>
+                  <span className="text-brand-neon shrink-0">{promptLine}</span>
                   <span className="break-all">{entry.command}</span>
                 </div>
               )}
@@ -181,21 +214,26 @@ export default function Terminal() {
         {/* Active Input Line */}
         <div className="flex gap-2 text-brand-neon mt-2 items-center">
           <span className="shrink-0 flex items-center text-xs sm:text-sm">
-            <span className="text-green-500 mr-1">➜</span> <span className="hidden sm:inline">root@jfsf:</span>~$
+            <span className="text-green-500 mr-1 shrink-0">➜</span>
+            <span className="truncate max-w-[min(11rem,38vw)] sm:max-w-none">{promptLabel}:</span>~$
           </span>
           <input
             ref={inputRef}
             type="text"
             value={input}
+            placeholder={typingCommand ? "…" : "help · whoami · TAB completa · ↑↓ histórico"}
             onChange={(e) => {
               if (!typingCommand) setInput(e.target.value);
             }}
             onKeyDown={handleKeyDown}
+            onClick={(e) => e.stopPropagation()}
+            onMouseDown={(e) => e.stopPropagation()}
             disabled={!!typingCommand}
-            className="flex-1 bg-transparent border-none outline-none text-brand-heading font-mono min-w-0 text-xs sm:text-sm md:text-base"
+            className="flex-1 bg-transparent border-none outline-none text-brand-heading font-mono min-w-0 text-xs sm:text-sm md:text-base select-text placeholder:text-brand-text/35 placeholder:text-[0.7rem] sm:placeholder:text-xs"
             autoFocus
             spellCheck={false}
             autoComplete="off"
+            aria-label="Linha de comando"
           />
           {/* Animated cursor */}
           {!input && (

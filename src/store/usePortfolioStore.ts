@@ -28,6 +28,7 @@ export const AVAILABLE_COMMANDS = [
   'su root',
   'cat flag.txt',
   'decrypt_protocol',
+  'security_audit',
   'theme red',
   'theme blue',
 ] as const;
@@ -49,6 +50,7 @@ interface PortfolioState {
 
   // CTF
   ctfUnlocked: boolean;
+  auditBadgeUnlocked: boolean;
 
   // Theme
   themeMode: 'blue' | 'red';
@@ -68,6 +70,7 @@ interface PortfolioState {
   setRebooting: (active: boolean) => void;
   setIntrusionAlert: (active: boolean) => void;
   setCtfUnlocked: (active: boolean) => void;
+  setAuditBadgeUnlocked: (active: boolean) => void;
   setThemeMode: (mode: 'blue' | 'red') => void;
 }
 
@@ -99,6 +102,7 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
   intrusionAlert: false,
 
   ctfUnlocked: false,
+  auditBadgeUnlocked: false,
   themeMode: 'blue',
 
   setActiveView: (view) => set({ activeView: view }),
@@ -144,6 +148,7 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
   setRebooting: (v) => set({ rebooting: v }),
   setIntrusionAlert: (v) => set({ intrusionAlert: v }),
   setCtfUnlocked: (v) => set({ ctfUnlocked: v }),
+  setAuditBadgeUnlocked: (v) => set({ auditBadgeUnlocked: v }),
 
   /* ── Theme ────────────────────────────────────────── */
   setThemeMode: (mode) => {
@@ -160,7 +165,7 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
     const {
       addToHistory, setActiveView, clearHistory,
       setMatrixMode, setRebooting, setIntrusionAlert,
-      pushToCommandLog, setCtfUnlocked, setThemeMode,
+      pushToCommandLog, setCtfUnlocked, setAuditBadgeUnlocked, setThemeMode,
     } = get();
 
     // Echo the raw command
@@ -191,6 +196,35 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
     /* ── CTF ─── */
     if (trimmedCmd === 'cat flag.txt') {
       addToHistory({ output: 'Permission denied. Try harder.', isError: true });
+      return;
+    }
+
+    if (trimmedCmd === 'security_audit') {
+      import('@/lib/audio').then(m => m.cyberAudio.playSuccess());
+      setAuditBadgeUnlocked(true);
+      addToHistory({
+        output: `═══════════════════════════════════════════════════════════
+  JFSF CLIENT-SIDE AUDIT (static export) — resumo
+═══════════════════════════════════════════════════════════
+[LOW]  SEC-001  Security headers (CSP, HSTS, XFO) em GH Pages
+        Mitigação: CDN/proxy na frente do site (fora do Next export).
+
+[MED]  SEC-002  Telemetria terceira (ipify, GitHub API)
+        Tráfego vai para hosts externos → aviso em privacidade.
+
+[MED]  SEC-003  Tabnabbing via window.open — REMEDIADO
+        Links de repo: apenas https + domínio GitHub; noopener,noreferrer.
+
+[LOW]  SEC-004  INTEL no console (DevTools)
+        Proposital para o mini-CTF; remova em builds “sérios”.
+
+[INFO] Próximo passo do CTF: dica [INTEL] no console, depois decrypt_protocol
+───────────────────────────────────────────────────────────
+  BONUS FLAG: CTF{noopener_enforces_the_new_window_boundary}
+  Badge HARDENER desbloqueado no canto superior direito.
+═══════════════════════════════════════════════════════════`,
+        isSystem: true,
+      });
       return;
     }
 
@@ -277,6 +311,8 @@ export const usePortfolioStore = create<PortfolioState>((set, get) => ({
 ├─────────────────────────┼───────────────────────────────────┤
 │  ↑ / ↓                  │  Navegar histórico de comandos    │
 │  TAB                    │  Autocompletar comando            │
+├─────────────────────────┼───────────────────────────────────┤
+│  security_audit         │  Relatório cliente-side / CTF     │
 ├─────────────────────────┼───────────────────────────────────┤
 │  ██ EASTER EGGS ██      │  Descubra os segredos...          │
 └─────────────────────────┴───────────────────────────────────┘`

@@ -24,6 +24,7 @@ export default function Navigation() {
 
   return (
     <motion.nav
+      aria-label="Navegação principal"
       className="glass-panel w-full rounded-2xl p-2 lg:p-4 shrink-0 shadow-lg border-b border-white/5 relative overflow-hidden"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -45,6 +46,8 @@ export default function Navigation() {
           return (
             <motion.button
               key={item.id}
+              type="button"
+              aria-current={isActive ? "page" : undefined}
               onClick={() => handleNavClick(item.cmd)}
               variants={fadeInUp}
               whileHover={hoverLift}

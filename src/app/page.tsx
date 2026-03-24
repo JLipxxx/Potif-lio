@@ -24,6 +24,7 @@ import { useKonamiCode } from "@/hooks/useKonamiCode";
 export default function Home() {
   const activeView = usePortfolioStore((state) => state.activeView);
   const ctfUnlocked = usePortfolioStore((state) => state.ctfUnlocked);
+  const auditBadgeUnlocked = usePortfolioStore((state) => state.auditBadgeUnlocked);
   const [mounted, setMounted] = React.useState(false);
   const [defaceActive, setDefaceActive] = useState(false);
 
@@ -34,7 +35,24 @@ export default function Home() {
   // Konami Code listener
   useKonamiCode(() => setDefaceActive(true));
 
-  if (!mounted) return null;
+  if (!mounted) {
+    return (
+      <div
+        className="min-h-screen bg-brand-bg flex flex-col items-stretch justify-center p-3 md:p-6 lg:p-8"
+        aria-busy="true"
+        aria-live="polite"
+        aria-label="A carregar o painel"
+      >
+        <div className="w-full max-w-[1920px] mx-auto flex flex-col lg:flex-row flex-1 gap-4 lg:gap-8 min-h-[70vh] animate-pulse">
+          <div className="flex flex-col w-full lg:w-[60%] xl:w-[65%] gap-4 lg:gap-6">
+            <div className="h-14 lg:h-16 rounded-2xl bg-white/5 border border-white/5" />
+            <div className="flex-1 min-h-[280px] rounded-2xl bg-white/5 border border-white/5" />
+          </div>
+          <div className="w-full lg:w-[40%] xl:w-[35%] min-h-[300px] rounded-2xl bg-white/5 border border-white/5" />
+        </div>
+      </div>
+    );
+  }
 
   const renderView = () => {
     switch (activeView) {
@@ -48,21 +66,38 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col lg:flex-row w-full min-h-screen lg:h-screen bg-cover relative bg-brand-bg overflow-x-hidden">
+    <main
+      id="main-content"
+      className="flex flex-col lg:flex-row w-full min-h-screen lg:h-screen bg-cover relative bg-brand-bg overflow-x-hidden scroll-mt-20"
+      tabIndex={-1}
+    >
       {/* Threat Map Background (SOC Network) */}
       <ThreatMap />
       <EasterEggs />
       <DefaceOverlay active={defaceActive} onDismiss={() => setDefaceActive(false)} />
 
-      {/* CTF Explorer Badge */}
-      {ctfUnlocked && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="fixed top-3 right-3 z-50 ctf-badge bg-brand-surface border border-brand-neon/40 text-brand-neon text-xs font-mono px-3 py-1.5 rounded-full flex items-center gap-2"
-        >
-          <span>🏆</span> EXPLORER
-        </motion.div>
+      {/* Mini-CTF badges */}
+      {(ctfUnlocked || auditBadgeUnlocked) && (
+        <div className="fixed top-3 right-3 z-50 flex flex-col items-end gap-2">
+          {ctfUnlocked && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="ctf-badge bg-brand-surface border border-brand-neon/40 text-brand-neon text-xs font-mono px-3 py-1.5 rounded-full flex items-center gap-2"
+            >
+              <span>🏆</span> EXPLORER
+            </motion.div>
+          )}
+          {auditBadgeUnlocked && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="ctf-badge bg-brand-surface border border-brand-cyan/40 text-brand-cyan text-xs font-mono px-3 py-1.5 rounded-full flex items-center gap-2"
+            >
+              <span>🔐</span> HARDENER
+            </motion.div>
+          )}
+        </div>
       )}
 
       {/* Main Layout Container */}

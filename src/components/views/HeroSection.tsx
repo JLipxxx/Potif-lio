@@ -85,7 +85,15 @@ export default function HeroSection() {
       {/* Top Badge */}
       <motion.div
         variants={fadeInUp}
+        role="button"
+        tabIndex={0}
         onClick={handleAuthClick}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            handleAuthClick();
+          }
+        }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         className="inline-flex items-center self-start gap-2 bg-brand-surface-light border border-brand-neon/30 px-4 py-1.5 rounded-full text-brand-neon text-sm font-mono uppercase tracking-widest shimmer cursor-pointer"
@@ -122,11 +130,11 @@ export default function HeroSection() {
 
       {/* Bio Card */}
       <motion.div
-        className="bg-brand-surface border border-white/5 p-6 md:p-8 rounded-2xl relative overflow-hidden group cursor-pointer"
+        className="bg-brand-surface border border-white/5 p-6 md:p-8 rounded-2xl relative overflow-hidden group cursor-pointer transition-[border-color,box-shadow] duration-300 hover:border-brand-neon/15"
         variants={fadeInUp}
         whileHover={hoverLift}
         onClick={handleBioClick}
-        title="Requisitar API de Biografia"
+        title="Clique na bio para simular GET /v1/bio no terminal (links abaixo são independentes)"
       >
         <div className="absolute top-0 right-0 w-32 h-32 bg-brand-neon/5 blur-3xl rounded-full" />
 

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { fadeInUp, hoverLift } from "@/lib/animations";
 import { usePortfolioStore } from "@/store/usePortfolioStore";
 import { cyberAudio } from "@/lib/audio";
+import { isSafeGitHubHttpsUrl } from "@/lib/safeUrl";
 
 interface GithubData {
   followers: number;
@@ -59,7 +60,14 @@ export default function GithubStats() {
         output: `[+] Cloning into '${repo.name}'...\n[+] remote: Enumerating objects: 100% (done)\n[+] Checking out files: 100% (done)\n[SUCCESS] Repository synchronized with local dashboard.`,
         isSystem: true
       });
-      window.open(repo.html_url, "_blank");
+      if (isSafeGitHubHttpsUrl(repo.html_url)) {
+        window.open(repo.html_url, "_blank", "noopener,noreferrer");
+      } else {
+        addToHistory({
+          output: "[!] Aborted: repository URL failed HTTPS/GitHub allowlist checks.",
+          isError: true,
+        });
+      }
     }, 800);
   };
 
@@ -86,7 +94,20 @@ export default function GithubStats() {
           className="bg-brand-surface-light border border-white/5 rounded-xl p-6 flex flex-col items-center justify-center min-w-[200px]"
           variants={fadeInUp}
         >
-          <img src={user.avatar_url} alt="GitHub Avatar" className="w-20 h-20 rounded-full border-2 border-brand-neon mb-4" />
+          {isSafeGitHubHttpsUrl(user.avatar_url) ? (
+            <img
+              src={user.avatar_url}
+              alt="GitHub Avatar"
+              className="w-20 h-20 rounded-full border-2 border-brand-neon mb-4 object-cover"
+            />
+          ) : (
+            <div
+              className="w-20 h-20 rounded-full border-2 border-brand-neon mb-4 bg-brand-surface flex items-center justify-center text-brand-text/50"
+              aria-hidden
+            >
+              <Github size={36} />
+            </div>
+          )}
           <div className="text-brand-heading font-bold">@{user.login}</div>
           <div className="text-sm text-brand-text flex gap-4 mt-2">
             <span className="flex items-center gap-1"><GitCommit size={14} /> {user.public_repos} Repos</span>

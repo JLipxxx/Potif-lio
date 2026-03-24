@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
-// NOTE: Security headers (CSP, HSTS, X-Frame-Options, etc.) must be
-// configured on your hosting server (Vercel/Nginx/Apache) since
-// Next.js headers() does not work with output: 'export'.
+// NOTE: With output: 'export', Next cannot attach response headers here.
+// Hardening: configure CSP, HSTS, X-Frame-Options, Referrer-Policy on CDN
+// (Cloudflare, etc.) or reverse proxy. See also `security_audit` in the CLI.
 
 const isProd = process.env.NODE_ENV === 'production';
 

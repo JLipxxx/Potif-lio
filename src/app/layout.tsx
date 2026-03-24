@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, Fira_Code } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
+
+const staticAssetBase = process.env.NODE_ENV === "production" ? "/Potif-lio" : "";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -53,15 +56,19 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        {/* CTF Breadcrumb — discoverable via browser DevTools */}
-        <script dangerouslySetInnerHTML={{ __html: `
-          console.log("%c[INTEL] Hint: There is a hidden protocol in this system.", "color: #00ff00; font-family: monospace; font-size: 14px;");
-          console.log("%c[INTEL] Try: atob('ZGVjcnlwdF9wcm90b2NvbA==')", "color: #aaaaaa; font-family: monospace; font-size: 12px;");
-        ` }} />
       </head>
       <body
         className={`${inter.variable} ${firaCode.variable} antialiased font-sans flex flex-col min-h-screen lg:h-screen lg:overflow-hidden selection:bg-brand-neon selection:text-brand-bg bg-brand-bg`}
       >
+        <a href="#main-content" className="skip-link">
+          Ir para o conteúdo principal
+        </a>
+        {/* CTF breadcrumbs: external asset (avoid inline script in <head>). */}
+        <Script
+          id="ctf-console-intel"
+          src={`${staticAssetBase}/ctf-console-intel.js`}
+          strategy="afterInteractive"
+        />
         {children}
       </body>
     </html>
